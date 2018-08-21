@@ -11,30 +11,43 @@ loadEventListeners();
 
 // 
 function loadEventListeners(){
-  //Add task event
+  // Add task event
   form.addEventListener('submit', addTask);
+  // remove task event
+  taskList.addEventListener('click', removeTask);
 }
 
-//add Task function
+// Add Task 
 function addTask(e) {
   if(taskInput.value === ''){
     alert('Add a task');
   }
 
-  //create li element
+  // create li element
   const li = document.createElement('li');
   li.className = 'collection-item';
   li.appendChild(document.createTextNode(taskInput.value));
 
-  //create new link
+  // create new link
   const link = document.createElement('a');
   link.className ='delete-item secondary-content';
   link.innerHTML ='<i class="fa fa-remove"></i>'
   li.appendChild(link);
 
   taskList.appendChild(li);
- //clear input
+ // clear input
   taskInput.value = '';
   e.preventDefault();
+}
+
+
+// Remove Task
+function removeTask(e){
+
+  if (e.target.parentElement.classList.contains('delete-item')){
+    if(confirm('Are you sure')){
+      e.target.parentElement.parentElement.remove(); 
+    }
+  }
 }
 
