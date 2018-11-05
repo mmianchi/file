@@ -38,11 +38,27 @@ function addTask(e) {
   link.innerHTML ='<i class="fa fa-remove"></i>'
   li.appendChild(link);
 
+  //store in localstorage
+  storeTaskInLocalStorage(taskInput.value);
+
   taskList.appendChild(li);
  // clear input
   taskInput.value = '';
   e.preventDefault();
 }
+//Store Task
+function storeTaskInLocalStorage(task){
+  let tasks;
+  if(localStorage.getItem('task') === null){
+    tasks =[]
+  } else {
+    tasks = JSON.parse(localStorage.getItem("task"));
+  }
+  tasks.push(task);
+
+  localStorage.setItem('tasks', JSON.stringify(tasks));
+}
+
 
 
 // Remove Task
@@ -66,11 +82,12 @@ function clearTasks(e){
 }
 
 // Filter Tasks
-function filterTasks(e){
-  const text = e.target.value.toLowercase();
-  document.querySelectorAll('.collection-item').forEach(function(task){
+function filterTasks(e) {
+  const text = e.target.value.toLowerCase();
+
+  document.querySelectorAll('.collection-item').forEach(function (task) {
     const item = task.firstChild.textContent;
-    if(item.toLowerCase.indexOf(text) != -1){
+    if (item.toLowerCase().indexOf(text) != -1) {
       task.style.display = 'block';
     } else {
       task.style.display = 'none';
